@@ -1,7 +1,7 @@
 #include <stdio.h>
 // Move Racket
 int Mov_Racket(int racket_y_center, int mov) {
-  if ((racket_left_y_center != 2) && (racket_left_y_center != 24))
+  if ((racket_y_center != 2) && (racket_y_center != 24))
     return racket_y_center += mov;
   else
     return racket_y_center;
