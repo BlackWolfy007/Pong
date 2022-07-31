@@ -92,19 +92,19 @@ void Game_Init() {
     // Moving the left racket position up the board (and down the coordinate
     // axis)
     if (key == 'a')
-      Mov_Racket(racket_left_y_center, -1);
+      racket_left_y_center = Mov_Racket(racket_left_y_center, -1);
     // Moving the left racket position down the board (and up the coordinate
     // axis)
     if (key == 'z')
-      Mov_Racket(racket_left_y_center, 1);
+      racket_left_y_center = Mov_Racket(racket_left_y_center, 1);
     // Moving the right racket position up the board (and down the coordinate
     // axis)
     if (key == 'k')
-      Mov_Racket(racket_right_y_center, -1);
+      racket_right_y_center = Mov_Racket(racket_right_y_center, -1);
     // Moving the right racket position down the board (and up the coordinate
     // axis)
     if (key == 'm')
-      Mov_Racket(racket_right_y_center, 1);
+      racket_right_y_center = Mov_Racket(racket_right_y_center, 1);
     // Skip one frame
     if (key == ' ') {
       key = '0';
