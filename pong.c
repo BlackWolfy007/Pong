@@ -89,25 +89,23 @@ void Game_Init() {
       ball_x = 40, ball_y = 13, ball_dx = 1, ball_dy = 0;
   // Check what of the keys was pressed
   do {
-      
-
 
     // Moving the left racket position up the board (and down the coordinate
     // axis)
     if (key == 'a')
-        racket_left_y_center = Mov_Racket(racket_left_y_center, -1);
+      racket_left_y_center = Mov_Racket(racket_left_y_center, -1);
     // Moving the left racket position down the board (and up the coordinate
     // axis)
     if (key == 'z')
-        racket_left_y_center = Mov_Racket(racket_left_y_center, 1);
+      racket_left_y_center = Mov_Racket(racket_left_y_center, 1);
     // Moving the right racket position up the board (and down the coordinate
     // axis)
     if (key == 'k')
-        racket_right_y_center = Mov_Racket(racket_right_y_center, -1);
+      racket_right_y_center = Mov_Racket(racket_right_y_center, -1);
     // Moving the right racket position down the board (and up the coordinate
     // axis)
     if (key == 'm')
-        racket_right_y_center = Mov_Racket(racket_right_y_center, 1);
+      racket_right_y_center = Mov_Racket(racket_right_y_center, 1);
     // Skip one frame
     if (key == ' ') {
       key = 2555;
@@ -127,7 +125,7 @@ void Game_Init() {
         ball_dx *= -1;
         ball_dy *= -1;
       } else {
-        
+
         // Check if ball has touched top of the any racket
         if (Encount_Racket_Top(ball_x, ball_dx, ball_y, racket_left_x,
                                racket_left_y_center) ||
@@ -148,14 +146,15 @@ void Game_Init() {
     if (Encount_Wall(ball_y, ball_dy)) {
       ball_dy *= -1;
     }
-    
+
     // Change the position of the ball
     ball_x += ball_dx;
     ball_y += ball_dy;
     // Display grid
-    if (key == '\n') Grid_Display(score_first_player, score_second_player, ball_x, ball_y,
-        racket_left_x, racket_left_y_center, racket_right_x,
-        racket_right_y_center);
+    if (key == '\n')
+      Grid_Display(score_first_player, score_second_player, ball_x, ball_y,
+                   racket_left_x, racket_left_y_center, racket_right_x,
+                   racket_right_y_center);
     // Gets input characters from players
     key = getchar();
     // printf("\e[2J\e[3J\e[H");
