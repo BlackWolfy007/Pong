@@ -1,7 +1,7 @@
 #include <stdio.h>
 // Move Racket
 int Mov_Racket(int racket_y_center, int mov) {
-  if ((racket_y_center != 2) && (racket_y_center != 24))
+  if ((racket_y_center + mov > 1) && (racket_y_center + mov < 25))
     return racket_y_center += mov;
   else
     return racket_y_center;
@@ -33,7 +33,7 @@ int Encount_Racket(int ball_x, int ball_dx, int ball_y, int racket_x,
 }
 // Check if ball has touched the wall
 int Encount_Wall(int ball_y, int ball_dy) {
-  return (ball_y + ball_dy == 27 || ball_y + ball_dy == 1);
+  return (ball_y + ball_dy == 26 || ball_y + ball_dy == 0);
 }
 // Check if part of racket is sutuated on (x,y) coords
 int If_Racket(int racket_x, int racket_y_center, int x, int y) {
@@ -78,7 +78,7 @@ void Grid_Display(int score_first_player, int score_second_player, int ball_x,
 // Initializes the game round
 void Game_Init() {
   // Input key
-  char key = '0';
+  char key = '\n';
   // Score for players
   static int score_first_player = 0, score_second_player = 0;
   // Right Racket parameters
@@ -89,25 +89,28 @@ void Game_Init() {
       ball_x = 40, ball_y = 13, ball_dx = 1, ball_dy = 0;
   // Check what of the keys was pressed
   do {
+      
+
+
     // Moving the left racket position up the board (and down the coordinate
     // axis)
     if (key == 'a')
-      racket_left_y_center = Mov_Racket(racket_left_y_center, -1);
+        racket_left_y_center = Mov_Racket(racket_left_y_center, -1);
     // Moving the left racket position down the board (and up the coordinate
     // axis)
     if (key == 'z')
-      racket_left_y_center = Mov_Racket(racket_left_y_center, 1);
+        racket_left_y_center = Mov_Racket(racket_left_y_center, 1);
     // Moving the right racket position up the board (and down the coordinate
     // axis)
     if (key == 'k')
-      racket_right_y_center = Mov_Racket(racket_right_y_center, -1);
+        racket_right_y_center = Mov_Racket(racket_right_y_center, -1);
     // Moving the right racket position down the board (and up the coordinate
     // axis)
     if (key == 'm')
-      racket_right_y_center = Mov_Racket(racket_right_y_center, 1);
+        racket_right_y_center = Mov_Racket(racket_right_y_center, 1);
     // Skip one frame
     if (key == ' ') {
-      key = '0';
+      key = 2555;
       continue;
     }
 
@@ -124,7 +127,7 @@ void Game_Init() {
         ball_dx *= -1;
         ball_dy *= -1;
       } else {
-        ball_dx *= -1;
+        
         // Check if ball has touched top of the any racket
         if (Encount_Racket_Top(ball_x, ball_dx, ball_y, racket_left_x,
                                racket_left_y_center) ||
@@ -137,6 +140,7 @@ void Game_Init() {
         else {
           ball_dy = Ball_DY_Change_Racket_Bottom(ball_dy);
         }
+        ball_dx *= -1;
       }
     }
     // Check if ball had touched any wall. If touched - change the movement
@@ -144,14 +148,14 @@ void Game_Init() {
     if (Encount_Wall(ball_y, ball_dy)) {
       ball_dy *= -1;
     }
-    // Display grid
-    Grid_Display(score_first_player, score_second_player, ball_x, ball_y,
-                 racket_left_x, racket_left_y_center, racket_right_x,
-                 racket_right_y_center);
+    
     // Change the position of the ball
     ball_x += ball_dx;
     ball_y += ball_dy;
-
+    // Display grid
+    if (key == '\n') Grid_Display(score_first_player, score_second_player, ball_x, ball_y,
+        racket_left_x, racket_left_y_center, racket_right_x,
+        racket_right_y_center);
     // Gets input characters from players
     key = getchar();
     // printf("\e[2J\e[3J\e[H");
