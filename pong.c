@@ -35,6 +35,10 @@ int Encount_Racket(int ball_x, int ball_dx, int ball_y, int racket_x,
 int Encount_Wall(int ball_y, int ball_dy) {
   return (ball_y + ball_dy == 26 || ball_y + ball_dy == 0);
 }
+// Check if ball has touched the player wall
+int Encount_Player_Wall(int ball_x, int ball_dx) {
+  return (ball_x + ball_dx == 80 || ball_x + ball_dx == 0);
+}
 // Check if part of racket is sutuated on (x,y) coords
 int If_Racket(int racket_x, int racket_y_center, int x, int y) {
   return ((racket_x == x) &&
@@ -108,7 +112,7 @@ void Game_Init() {
       racket_right_y_center = Mov_Racket(racket_right_y_center, 1);
     // Skip one frame
     if (key == ' ') {
-      key = 2555;
+      key = 150;
       continue;
     }
 
@@ -125,7 +129,6 @@ void Game_Init() {
         ball_dx *= -1;
         ball_dy *= -1;
       } else {
-
         // Check if ball has touched top of the any racket
         if (Encount_Racket_Top(ball_x, ball_dx, ball_y, racket_left_x,
                                racket_left_y_center) ||
@@ -146,7 +149,12 @@ void Game_Init() {
     if (Encount_Wall(ball_y, ball_dy)) {
       ball_dy *= -1;
     }
-
+    if (Encount_Player_Wall(ball_x, ball_dx)) {
+      if (ball_x == 79) {
+        score_first_player++;
+            ball_x = 40;} else if (ball_x == 1) {
+            score_second_player++; ball_x = 40;}
+    }
     // Change the position of the ball
     ball_x += ball_dx;
     ball_y += ball_dy;
@@ -155,13 +163,16 @@ void Game_Init() {
       Grid_Display(score_first_player, score_second_player, ball_x, ball_y,
                    racket_left_x, racket_left_y_center, racket_right_x,
                    racket_right_y_center);
+    if (score_first_player == 3) {
+        printf("First Player WIN! Congratulations!!!");
+        break;} else if (score_second_player == 3) {
+            printf("Second Player WIN! Congratulations!!!");
+            break;}
     // Gets input characters from players
     key = getchar();
-    // printf("\e[2J\e[3J\e[H");
   } while (key != 'q');
 }
 
 int main(void) {
-  // printf("\e[2J\e[3J\e[H");
   Game_Init();
 }
